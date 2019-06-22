@@ -3,7 +3,7 @@ close all;
 objects = imaqfind;
 delete(objects)
 
-vid = VideoReader('LOcombo.avi');
+vid = VideoReader('BirdsEye.avi');
 
 %INPUT RESOLUTION HERE
 res_x = 480;            %<<<
@@ -13,18 +13,18 @@ res_y = 270;            %<<<
 %480p = 854x480
 %720p = 1280x720
 
-%how far down the screen can a lane appear before stopping the car
-stop_threshhold = res_y / 10 * 8;
-top_y = res_y / 10 * 2;
-bot_y = res_y / 10 * 4;
-HROI_length = res_x / 3 * 2; %right now its 2/3 of the screen resolution
+stop_threshhold = res_y / 10 * 8; %how far down the screen can a lane appear before stopping the car
+top_y = res_y / 10 * 2; %top of region of interest
+bot_y = res_y / 10 * 4; %bottom of region of interest
+HROI_length = res_x / 3 * 2; %  distance between first and second vertical areas of interest
+%right now its 2/3 of the screen resolution
 
-while hasFrame(vid)
+while hasFrame(vid) %while the video is running
     
     Image = readFrame(vid);
     %want 10fps, 0.1s * 100 = 10, 10mod10 = 0
     %0.2s *100 = 20, 20mod10 = 0
-    currentTime = vid.CurrentTime * 100;
+    currentTime = vid.CurrentTime * 100;    %hack to get frame every 10th frame
     
     if mod(currentTime, 10) == 0
         
@@ -39,7 +39,7 @@ while hasFrame(vid)
         yellowLABImage = createYellowLABMask(Image);
         yellowImg = (yellowHSVImage & yellowLABImage);
         
-        %filters the images individually
+        % filter out areas that are smaller than 50 pixels
         filteredBlue = bwareaopen(blueImg, 50);
         filteredYellow = bwareaopen(yellowImg, 50);
         
