@@ -1,26 +1,29 @@
 clc; clear;
 close all; 
-objects = imaqfind;
-delete(objects);
+% 424 x 240
+% objects = imaqfind;
+% delete(objects);
 
-vid = VideoReader('LOcombo.avi');
+setenv('ROS_MASTER_URI','http://172.19.119.104:11311')  % set the NUC's IP Address, 11311 is the ROS port
+setenv('ROS_IP','172.19.127.215')   % set the PC's current IP Address
+rosinit;
 
-while hasFrame(vid) %while the video is running
+image_sub = rossubscriber('/camera/color/image_raw/compressed');
+
+while true
     
-    Image = readFrame(vid);
-    %want 10fps, 0.1s * 100 = 10, 10mod10 = 0
-    %0.2s *100 = 20, 20mod10 = 0
-    currentTime = vid.CurrentTime * 100;    %hack to get frame every 10th frame
-    
-    if mod(currentTime, 10) == 0
+    image = receive(image_sub, 10);
+    image = readImage(image);
+    imshow(image);
         
-        %filtering the left and right lane
-        blue_left = true;
-        [filtered_left_img filtered_right_img] = filterLanes(Image, blue_left);
-        
-        error = errorCalculation(filtered_left_img, filtered_right_img)
-  
-    end
-    
-    F = getframe(gcf);
+%     %filtering the left and right lane
+%     blue_left = true;
+%     [filtered_left_img filtered_right_img] = filterLanes(image, blue_left);
+% 
+%     error = errorCalculation(filtered_left_img, filtered_right_img);
+%     
+%     combined_img = (filtered_left_img & filtered_right_img);
+%     
+% %     imshow(combined_img);
+ 
 end

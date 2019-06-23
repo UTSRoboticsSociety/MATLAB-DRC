@@ -2,8 +2,8 @@ function error = errorCalculation(filtered_left_img,filtered_right_img)
 %   Calculates the error of deviation from the images
 
     %INPUT RESOLUTION HERE
-    res_x = 480;            %<<<
-    res_y = 270;            %<<<
+    res_x = 424;            %<<<
+    res_y = 240;            %<<<
 
     stop_threshhold = res_y / 10 * 8; %how far down the screen can a lane appear before stopping the car
     top_y = res_y / 10 * 2; %top of region of interest
