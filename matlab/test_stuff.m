@@ -9,7 +9,6 @@ while true
 end
 
 
-
 %% IMAGE TEST
 color_sub = rossubscriber('/camera/color/image_raw');
 while true
@@ -18,7 +17,18 @@ color_image = readImage(color);
 imshow(color_image);
 end
 
+
 %% VFH
+rosshutdown;
+clc; clear;
+close all; 
+
+rosinit;
+
+depth_sub = rossubscriber('/camera/depth/image_rect_raw');
+steer_svc = rossvcclient('/droid/steer');
+steer_msg = rosmessage(steer_svc);
+
 depth_img_width = 424;
 depth_img_height = 240;
 camera_field_of_view = 1.487021; %radians (~85 deg)
@@ -27,7 +37,6 @@ depth_pixel_layers = 20;
 depth_pixel_border = 30;
 ranges_matrix = zeros(depth_pixel_layers,depth_img_width);
 ranges = zeros(1,depth_img_width);
-depth_sub = rossubscriber('/camera/depth/image_rect_raw');
 
 VFH = robotics.VectorFieldHistogram;
 VFH.DistanceLimits = [0.6 1.6];
@@ -55,11 +64,13 @@ while true
 
     targetDir = 0;
     steeringDir = VFH(scan,targetDir);
-    steeringDir = rad2deg(steeringDir)
-
-%     h = figure;
-%     set(h,'Position',[50 50 800 400])
-%     show(VFH)
+    steeringDir = rad2deg(steeringDir);
+    
+    steer_msg.Angle = steeringDir;
+    
+    try
+        steer_svc.call(steer_msg, 'Timeout', 10);
+    end
 
 end
 
