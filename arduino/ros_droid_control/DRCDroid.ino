@@ -16,8 +16,8 @@ void DRCDroid::init()
 
 void DRCDroid::steerAngle(float angle)
 {
-  if (angle < -30 ) angle = -30;
-  if (angle > 30) angle = 30;
+  if (angle < -35 ) angle = -35;
+  if (angle > 35) angle = 35;
   servo.write(angle+90);
 }
 

@@ -5,9 +5,9 @@ function error = errorCalculation(filtered_left_img,filtered_right_img)
     res_x = 424;            %<<<
     res_y = 240;            %<<<
 
-    stop_threshhold = res_y / 10 * 8; %how far down the screen can a lane appear before stopping the car
-    top_y = res_y / 10 * 2; %top of region of interest
-    bot_y = res_y / 10 * 4; %bottom of region of interest
+    stop_threshhold = res_y / 10 * 9; %how far down the screen can a lane appear before stopping the car
+    top_y = res_y / 10 * 7.5; %top of region of interest
+    bot_y = res_y / 10 * 8.5; %bottom of region of interest
     HROI_length = res_x / 3 * 2; %  distance between first and second vertical areas of interest
     
     %making left lane ROIs
@@ -92,10 +92,10 @@ end
 
 function [left_peak_1_matrix, left_peak_2_matrix, left_peak_top_matrix] = leftPeaks(left_sum_1, left_sum_2, left_sum_top)
 
-    [left_peaks_1, left_locs_1] = findpeaks(left_sum_1,'MinPeakProminence',5,'MinPeakDistance',50);
+    [left_peaks_1, left_locs_1] = findpeaks(left_sum_1,'MinPeakProminence',5,'MinPeakDistance',40);
     left_peak_1_matrix = [left_peaks_1, left_locs_1];
     
-    [left_peaks_2, left_locs_2] = findpeaks(left_sum_2,'MinPeakProminence',5,'MinPeakDistance',50);
+    [left_peaks_2, left_locs_2] = findpeaks(left_sum_2,'MinPeakProminence',5,'MinPeakDistance',40);
     left_peak_2_matrix = [left_peaks_2, left_locs_2];
     
     [left_peaks_top, left_locs_top] = findpeaks(left_sum_top,'MinPeakProminence',5,'MinPeakDistance',100);
@@ -105,10 +105,10 @@ end
 
 function [right_peak_1_matrix, right_peak_2_matrix, right_peak_top_matrix] = rightPeaks(right_sum_1, right_sum_2, right_sum_top)
         
-    [right_peaks_1, right_locs_1] = findpeaks(right_sum_1,'MinPeakProminence',5,'MinPeakDistance',50);
+    [right_peaks_1, right_locs_1] = findpeaks(right_sum_1,'MinPeakProminence',5,'MinPeakDistance',40);
     right_peak_1_matrix = [right_peaks_1, right_locs_1];
 
-    [right_peaks_2, right_locs_2] = findpeaks(right_sum_2,'MinPeakProminence',5,'MinPeakDistance',50);
+    [right_peaks_2, right_locs_2] = findpeaks(right_sum_2,'MinPeakProminence',5,'MinPeakDistance',40);
     right_peak_2_matrix = [right_peaks_2, right_locs_2];
 
     [right_peaks_top, right_locs_top] = findpeaks(right_sum_top,'MinPeakProminence',5,'MinPeakDistance',100);

@@ -1,6 +1,6 @@
 function [filtered_left_img, filtered_right_img] = filterLanes(image, blue_left)
 % Filter image to black and white mask of blue and yellow lanes
-    
+
     blueHSVImage = createBlueHSVMask(image);    %HSV mask
     blueLABImage = createBlueLABMask(image);    %LAB mask
     blueImg = (blueHSVImage & blueLABImage);    %combining the two masks
@@ -21,7 +21,6 @@ function [filtered_left_img, filtered_right_img] = filterLanes(image, blue_left)
         filtered_right_img = filtered_blue_img;
     end
 end
-
 
 
 % FILTERING MASKS

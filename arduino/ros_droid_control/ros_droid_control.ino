@@ -16,8 +16,6 @@ void turnAngleCallback(const TurnAngle::Request & req, TurnAngle::Response & res
 
 void powerCallback(const Power::Request & req, Power::Response & res){
   matlab_droid.setPower(req.power);
-  delay(2000);
-  matlab_droid.setPower(0);
 }
 
 ros::ServiceServer<TurnAngle::Request, TurnAngle::Response> turn_angle_svc("/droid/steer",&turnAngleCallback);
