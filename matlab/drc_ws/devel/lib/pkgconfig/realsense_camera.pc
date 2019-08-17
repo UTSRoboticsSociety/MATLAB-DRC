@@ -1,0 +1,8 @@
+prefix=/home/robosoc/drc_ws/devel
+
+Name: realsense_camera
+Description: Description of realsense_camera
+Version: 0.0.1
+Cflags: -I/home/robosoc/drc_ws/devel/include
+Libs: -L/home/robosoc/drc_ws/devel/lib 
+Requires: message_runtime std_msgs
