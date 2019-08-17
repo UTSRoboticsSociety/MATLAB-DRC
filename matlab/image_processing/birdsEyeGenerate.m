@@ -1,0 +1,31 @@
+function bev_img = birdsEyeGenerate(image)
+
+    %INPUT RESOLUTION HERE
+    res_x = 424;            %<<<
+    res_y = 240;            %<<<
+
+    focalLength = [299.8130 299.4886];
+    principalPoint = [217.5308 120.8126];
+    imageSize = [res_x res_y];
+
+    camIntrinsics = cameraIntrinsics(focalLength,principalPoint,imageSize);
+
+    height = 0.3;
+    pitch = 22;
+
+    sensor = monoCamera(camIntrinsics,height,'Pitch',pitch);
+
+    distAhead = 2;
+    spaceToOneSide = 1;
+    bottomOffset = 0.5;
+
+    outView = [bottomOffset,distAhead,-spaceToOneSide,spaceToOneSide];
+
+    outImageSize = [NaN,250];
+
+    birdsEye = birdsEyeView(sensor,outView,outImageSize);
+
+    bev_img = transformImage(birdsEye, image);
+    
+end
+

@@ -1,11 +1,7 @@
-function steerAngle(steer_angle)
+function steerAngle(steer_svc, steer_msg, angle)
 %DRIVEDROID Steering using ros service
-    steer_svc = rossvcclient('/droid/steer');
-    steer_msg = rosmessage(steer_svc);
-    
-    steer_msg.Angle = steer_angle;
+    steer_msg.Angle = angle;
     try
         steer_svc.call(steer_msg, 'Timeout', 10);
     end
 end
-

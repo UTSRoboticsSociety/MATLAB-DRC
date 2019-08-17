@@ -1,12 +1,7 @@
-function setPower(power)
-%DRIVEDROID Steering using ros service
-    power_svc = rossvcclient('/droid/power');
-    power_msg = rosmessage(power_svc);
-    
+function setPower(power_svc, power_msg, power)
+%DRIVEDROID Setting the droid's power using ros service
     power_msg.Power = power;
-    
     try
         power_svc.call(power_msg, 'Timeout', 10);
     end
 end
-

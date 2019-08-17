@@ -30,10 +30,10 @@ while true
     image = readImage(image);
         
     %filtering the left and right lane
-    blue_left = true;
+    blue_left = false;
     [filtered_left_img filtered_right_img] = filterLanes(image, blue_left);
     
-%     combined_img = (filtered_left_img | filtered_right_img);
+    combined_img = (filtered_left_img | filtered_right_img);
 
     error = errorCalLiang(filtered_left_img, filtered_right_img);
     error = error*(-1);
@@ -42,6 +42,7 @@ while true
     steer_msg.Angle = error;
     try
         steer_svc.call(steer_msg, 'Timeout', 10);
+        disp(steer_svc.call);
     end
     
     if error > 30 || error < -30
@@ -50,12 +51,12 @@ while true
             power_svc.call(power_msg, 'Timeout', 10);
         end
     else
-        power_msg.Power = 38;
+        power_msg.Power = 32;
         try
             power_svc.call(power_msg, 'Timeout', 10);
         end
     end
     
-%     imshow(combined_img);
+    imshow(combined_img);
  
 end

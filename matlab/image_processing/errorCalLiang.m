@@ -5,8 +5,8 @@ function error = errorCalLiang(filtered_left_img,filtered_right_img)
     res_y = 240;            %<<<
     
     %average aoi values
-    bot_y = round(res_y / 10 * 9, 0);
-    top_y = round(res_y / 10 * 7, 0);
+    bot_y = round(res_y / 10 * 6, 0);
+    top_y = round(res_y / 10 * 5, 0);
     
     %making ROIs for LEFT LANE: top, bot, vert_left, vert_mid, vert_right, and stop
     %crop top area of interest for analysis
