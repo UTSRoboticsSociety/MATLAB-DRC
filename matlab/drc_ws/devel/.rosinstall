@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/robosoc/drc_ws/devel/setup.sh
